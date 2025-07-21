@@ -23,6 +23,7 @@ import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.pspdfkit.annotations.AnnotationType;
+import com.pspdfkit.react.helper.CustomConfigurationAdapter;
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration;
 import com.pspdfkit.configuration.activity.TabBarHidingMode;
 import com.pspdfkit.configuration.activity.ThumbnailBarMode;
@@ -674,7 +675,9 @@ public class ConfigurationAdapter {
     }
 
     public PdfActivityConfiguration build() {
-        return configuration.build();
+        PdfActivityConfiguration configurationBuild = configuration.build();
+        PdfActivityConfiguration customConfiguration = CustomConfigurationAdapter.setMaxZoom(configurationBuild, 100f);
+        return customConfiguration;
     }
 
     /**
