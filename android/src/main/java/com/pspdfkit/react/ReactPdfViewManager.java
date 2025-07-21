@@ -24,6 +24,7 @@ import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableNativeArray;
 import com.facebook.react.common.MapBuilder;
+import com.pspdfkit.react.helper.CustomConfigurationAdapter;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.UIManagerHelper;
 import com.facebook.react.uimanager.UIManagerModule;
@@ -253,7 +254,8 @@ public class ReactPdfViewManager extends ViewGroupManager<PdfView> {
     // Helper methods for setDocumentWithOrderedProps (not @ReactProp methods)
     private void setConfiguration(PdfView view, @NonNull ReadableMap configuration) {
         ConfigurationAdapter configurationAdapter = new ConfigurationAdapter(view.getContext(), configuration);
-        PdfActivityConfiguration configurationBuild = configurationAdapter.build();
+        PdfActivityConfiguration initialConfigurationBuild = configurationAdapter.build();
+        PdfActivityConfiguration configurationBuild = CustomConfigurationAdapter.setMaxZoom(initialConfigurationBuild, 100f);
         view.setInitialConfiguration(configurationBuild);
         // If there are pending toolbar items, we need to apply them.
         if (view.getPendingToolbarItems() != null) {
